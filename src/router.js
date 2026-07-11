@@ -26,7 +26,6 @@ const routes = [
   {
     // Catch all undefined routes and display the Not Found page
     path: '/:pathMatch(.*)*',
-    name: 'NotFoundPage',
     component: NotFound
   }
 ]
