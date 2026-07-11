@@ -8,7 +8,7 @@
   <!-- Display the user's name only when the visibility flag is true -->
   <div v-if="appStore.isVisible"
     class="p-2.5 flex justify-center items-center mt-24 text-[50px] text-brown-500 text-shadow-lg text-shadow-red-500">
-    Hey I'm True! {{ appStore.userName }}
+    Hey I'm show! {{ appStore.userName }}
   </div>
 </template>
 
