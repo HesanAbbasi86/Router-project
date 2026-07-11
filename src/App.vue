@@ -45,7 +45,7 @@ const links = [{
       a <button> around it would create nested interactive
       elements, which is not considered good HTML practice.
     -->
-    <RouterLink v-for="link in links" :key="links.id" :to="link.to" :class="link.class">
+    <RouterLink v-for="link in links" :key="link.id" :to="link.to" :class="link.class">
       {{ link.text }}
 
     </RouterLink>
