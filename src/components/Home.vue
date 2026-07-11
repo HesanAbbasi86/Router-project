@@ -1,5 +1,6 @@
 <script setup>
 // Import the Pinia store
+import { RouterLink } from 'vue-router';
 import { useAppStore } from '../stores/button'
 // Create an instance of the store
 const appStore = useAppStore()
@@ -27,4 +28,5 @@ const appStore = useAppStore()
         <input v-model="appStore.userName" type="text" placeholder="متن را وارد کنید"
             class="focus:outline-hidden text-center">
     </div>
+    <RouterView></RouterView>
 </template>
