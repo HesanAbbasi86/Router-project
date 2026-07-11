@@ -1,3 +1,10 @@
+<script setup>
+// Import the Pinia store
+import { useAppStore } from '../stores/button'
+
+// Create an instance of the store
+const appStore = useAppStore()
+</script>
 <template>
   <!-- Display the page title -->
   <h1
@@ -11,11 +18,3 @@
     Hey I'm show! {{ appStore.userName }}
   </div>
 </template>
-
-<script setup>
-// Import the Pinia store
-import { useAppStore } from '../stores/button'
-
-// Create an instance of the store
-const appStore = useAppStore()
-</script>
