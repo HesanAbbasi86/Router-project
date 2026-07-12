@@ -51,9 +51,6 @@ const routes = [
   {
     path: "/goto/Secondpage",
     component: Home,
-    beforeEnter(to, from) {
-      return "/firstpage";
-    },
   },
 ];
 
@@ -65,10 +62,14 @@ const router = createRouter({
   // Register application routes
   routes,
 });
-router.beforeEach((to) => {
-  if (to.meta.requiresAuth) {
-    return "/goto";
+router.beforeEach((to, from) => {
+  if (from.path === "/" && to.path === "/Firstpage") {
+    return "/goto/Firstpage";
+  }
+  if (from.path === "/goto/Secondpage" && to.path === "/Secondpage") {
+    return "/Firstpage";
   }
 });
 // Export the router instance
 export default router;
+
