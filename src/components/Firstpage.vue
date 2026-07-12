@@ -9,10 +9,7 @@ import { useAppStore } from '../stores/button'
 const appStore = useAppStore()
 
 // Access the current route
-const route = useRoute()
-
 // Log the route parameter to the console
-console.log(route.params.id)
 </script>
 <template>
     <!-- Display the page title -->

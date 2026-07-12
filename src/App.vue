@@ -2,6 +2,7 @@
 // Import RouterView to display the component
 // that matches the current route.
 import { RouterView, RouterLink } from 'vue-router'
+import { normalizeRouteRecord } from 'vue-router/experimental';
 const links = [{
   to: "/",
   class: "bg-indigo-950 text-white px-8 py-2.5 rounded no-underline bg-sky-500 hover:bg-sky-700",
@@ -15,14 +16,34 @@ const links = [{
   id: 2
 },
 {
-  to: "/Secondpage",
+  to: {
+    path: "/Secondpage",
+    hash: "#abbasi",
+    query: {
+      name: 'hesan',
+      age: 18
+    }
+  },
   class: "bg-indigo-950 text-white px-8 py-2.5 rounded no-underline bg-sky-500 hover:bg-sky-700 ",
   text: "Go To Second Page",
-  id: 3
+  id: 3,
+
+},
+{
+  to: "/Login",
+  class: "bg-indigo-950 text-white px-8 py-2.5 rounded no-underline bg-sky-500 hover:bg-sky-700 ",
+  text: "Go to Login page"
+},
+
+{
+  to: "/Dashboard",
+  class: "bg-indigo-950 text-white px-8 py-2.5 rounded no-underline bg-sky-500 hover:bg-sky-700 ",
+  text: "Go to Dashboard page"
 }]
 </script>
 
 <template>
+
   <!--
     Main navigation of the application.
 
@@ -50,14 +71,13 @@ const links = [{
 
     </RouterLink>
   </nav>
-
+  <RouterView />
   <!--
     RouterView acts as a placeholder.
-
     Why?
     It renders the component that matches the current route,
     allowing the navigation bar to remain unchanged while
     only the page content is updated.
   -->
-  <RouterView />
+
 </template>
