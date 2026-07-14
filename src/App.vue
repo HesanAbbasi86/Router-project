@@ -55,7 +55,7 @@ const links = [{
     If the project grows, the navigation can be moved
     into a dedicated Layout component.
   -->
-  <nav class="flex justify-center items-center mt-[100px] gap-5 text-[30px]">
+  <nav class="flex justify-center items-center mt-25 gap-5 text-[30px]">
 
     <!--
       RouterLink is styled as a button instead of wrapping

@@ -37,7 +37,7 @@ function login() {
 
     <div class="h-[70dvh] w-screen flex items-center justify-center overflow-hidden">
 
-        <div class="w-[330px] bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
+        <div class="w-82.5 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
 
             <h1 class="text-2xl font-bold text-center text-gray-800 dark:text-white">
                 Welcome Back
