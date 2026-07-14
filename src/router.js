@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { ref } from "vue";
 
 import NotFound from "./components/NotFound.vue";
 import Home from "./components/Home.vue";
@@ -7,62 +8,95 @@ import Secondpage from "./components/Secondpage.vue";
 import Dashboard from "./components/Dashboard.vue";
 import Login from "./components/Login.vue";
 
+/* ------------------------------------------------------------------ */
+/* Routes                                                              */
+/* ------------------------------------------------------------------ */
+
 const routes = [
-  {
-    path: "/",
-    component: Home,
-  },
-
-  {
-    path: "/Login",
-    component: Login,
-  },
-
-  {
-    path: "/Dashboard",
-    component: Dashboard,
-  },
-
-  {
-    path: "/Firstpage",
-    component: Firstpage,
-  },
-
-  {
-    path: "/Secondpage",
-    component: Secondpage,
-  },
-
-  {
-    path: "/:pathMatch(.*)*",
-    component: NotFound,
-  },
+  { path: "/", component: Home },
+  { path: "/Login", component: Login },
+  { path: "/Dashboard", component: Dashboard },
+  { path: "/Firstpage", component: Firstpage },
+  { path: "/Secondpage", component: Secondpage },
+  { path: "/:pathMatch(.*)*", component: NotFound },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-
   routes,
 });
 
-// Navigation Guard
+/* ------------------------------------------------------------------ */
+/* Reactive state                                                      */
+/* ------------------------------------------------------------------ */
+
+router.cameFrom = ref(sessionStorage.getItem("cameFrom"));
+router.redirectPage = ref(sessionStorage.getItem("redirectPage"));
+
+function setCameFrom(value) {
+  router.cameFrom.value = value;
+
+  if (value) {
+    sessionStorage.setItem("cameFrom", value);
+  } else {
+    sessionStorage.removeItem("cameFrom");
+  }
+}
+
+function setRedirectPage(value) {
+  router.redirectPage.value = value;
+
+  if (value) {
+    sessionStorage.setItem("redirectPage", value);
+  } else {
+    sessionStorage.removeItem("redirectPage");
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Navigation Guard                                                    */
+/* ------------------------------------------------------------------ */
 
 router.beforeEach((to, from, next) => {
-  const isLogin = localStorage.getItem("isLogin");
-
-  console.log("Login status:", isLogin);
-
-  // اگر کاربر Login نیست و میخواهد Dashboard برود
-
+  const username = localStorage.getItem("username");
+  const password = localStorage.getItem("password");
+  const isLogin = !!(username && password);
   if (to.path === "/Dashboard" && !isLogin) {
+    setRedirectPage(to.path);
+    setCameFrom(to.path);
+
+    sessionStorage.setItem("forcedRedirect", "1");
+
     next("/Login");
+    return;
+  }
+  if (to.path === "/Login") {
+    if (isLogin) {
+      next("/Dashboard");
+      return;
+    }
+
+    const forcedRedirect = sessionStorage.getItem("forcedRedirect");
+
+    if (forcedRedirect) {
+      sessionStorage.removeItem("forcedRedirect");
+    } else {
+      setRedirectPage(null);
+
+      if (from.path && from.path !== "/Login") {
+        setCameFrom(from.path);
+      }
+    }
+
+    next();
+    return;
   }
 
-  // اگر کاربر Login است و میخواهد دوباره Login برود
-  else if (to.path === "/Login" && isLogin) {
-    next("/Dashboard");
-  } else {
-    next();
+  next();
+});
+router.afterEach((to, from) => {
+  if (from.path && from.path !== to.path) {
+    setCameFrom(from.path);
   }
 });
 
