@@ -57,7 +57,7 @@ function setRedirectPage(value) {
 /* Navigation Guard                                                    */
 /* ------------------------------------------------------------------ */
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
   const username = localStorage.getItem("username");
   const password = localStorage.getItem("password");
   const isLogin = !!(username && password);
@@ -67,12 +67,12 @@ router.beforeEach((to, from, next) => {
 
     sessionStorage.setItem("forcedRedirect", "1");
 
-    next("/Login");
+    return "/Login";
     return;
   }
   if (to.path === "/Login") {
     if (isLogin) {
-      next("/Dashboard");
+      return "/Dashboard";
       return;
     }
 
@@ -88,11 +88,10 @@ router.beforeEach((to, from, next) => {
       }
     }
 
-    next();
     return;
   }
 
-  next();
+  return;
 });
 router.afterEach((to, from) => {
   if (from.path && from.path !== to.path) {
