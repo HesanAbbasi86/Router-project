@@ -68,12 +68,10 @@ router.beforeEach((to, from) => {
     sessionStorage.setItem("forcedRedirect", "1");
 
     return "/Login";
-    return;
   }
   if (to.path === "/Login") {
     if (isLogin) {
       return "/Dashboard";
-      return;
     }
 
     const forcedRedirect = sessionStorage.getItem("forcedRedirect");
